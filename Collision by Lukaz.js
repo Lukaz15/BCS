@@ -1,3 +1,4 @@
+//Initial declarations
 const canvas = document.getElementById('simulation')
 canvas.height = window.innerHeight / 1.3;
 canvas.width = window.innerWidth / 1.3;
@@ -9,13 +10,17 @@ const ball_text = document.getElementById('balls-value')
 const grav_slider = document.getElementById('gravity-slider')
 const grav_text = document.getElementById('gravity-value')
 const start = document.getElementById('start')
+//Declares the scale of the simulation
 const simScale = Math.max(canvas.width, canvas.height) / 100
 const sim = { width: canvas.width / simScale, height: canvas.height / simScale }
+//Declares some important global parameters 
 let gravity = -9.81
 const dt = 1.0 / 30.0
 let balls = 10
 let restitution = 1
 let objects = []
+
+//Functions to adjust the values of the sliders
 ball_slider.oninput = function () {
     balls = this.value
     ball_text.textContent = this.value
@@ -37,6 +42,7 @@ grav_slider.oninput = function () {
 function scaleY(posY) { return canvas.height - posY * simScale }
 function scaleX(posX) { return posX * simScale }
 
+// Construction of the class "object", the balls
 class object {
     constructor(radius, pos, startVelocity, velocity, mass, accel) {
         this.radius = radius
@@ -47,7 +53,7 @@ class object {
         this.accel = accel
     }
 }
-
+//Construction of the class "vector2" to represent 2D Vectors
 class vector2 {
     constructor(X = 0, Y = 0) {
         this.X = X
@@ -74,7 +80,7 @@ class vector2 {
         return this.X * v.X + this.Y * v.Y;
     }
 }
-
+//Initializes the objects and grants them a range of random properties
 function setupSim() {
     objects = [];
     start.textContent = 'Restart'
@@ -90,7 +96,7 @@ function setupSim() {
     }
 }
 
-
+//Detects and computes the collisions between objects
 function collisionObjects(object, i) {
     for (i2 = objects.indexOf(object) + 1; i2 < objects.length; i2++) {
         let object2 = objects[i2]
@@ -138,6 +144,7 @@ function collisionObjects(object, i) {
 
 }
 
+//Detects and computes the collision with walls
 function collisionWalls(object) {
 
     if (object.pos.X < object.radius) {
@@ -171,7 +178,7 @@ function collisionWalls(object) {
 
 }
 
-
+//Animates the objects across the simulation space and calls for the detections and handling of collisions
 function Animation() {
     objects.forEach(function callback(object, i) {
         if (object.velocity.X < object.startVelocity.X) {
@@ -188,7 +195,7 @@ function Animation() {
     });
 
 }
-
+//Function to play a sound when balls collide with each other
 function playOnBall(speed) {
     if (speed > 50) {
         const audio = new Audio('ball_collide.wav')
@@ -197,6 +204,7 @@ function playOnBall(speed) {
         audio.play()
     }
 }
+//Function to play a sound when balls collide with a wall
 function playOnWall(speed, sY) {
     console.log(sY)
     if (sY > 5) {
@@ -205,7 +213,7 @@ function playOnWall(speed, sY) {
         audio.play()
     }
 }
-
+//Function to draw a cosmetic circle around balls that collide
 function glowOn(object, object2, speed) {
     if (speed > 50){
         ctx.beginPath();
@@ -239,7 +247,7 @@ function drawObjects() {
     });
 }
 
-// Function for animation loop
+// Function to start the main animation loop
 function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     Animation()
