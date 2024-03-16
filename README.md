@@ -1,3 +1,5 @@
+<h1 style="font-size: 36px;" align="center">Balls Collision Simulation</h1>
+
 This is a basic simulation of balls colliding with each other using HTML, CSS, and JS.
 
 The physics are computed according to the law of conservation of momentum. Keep in mind that reducing the restitution value below 1 
@@ -14,5 +16,4 @@ an artificial factor to simulate inelastic collisions. Otherwise, during a compl
 <br>
 <br>
 Click on "Start" to start the simulation.
-You can change the value of restitution (to simulate inelastic collisions), gravity, and the amount of balls with the sliders at the
-top right of the screen. Note that changing the amount of balls requires clicking on restart for the change to take effect.
+You can adjust the restitution value (to simulate inelastic collisions), gravity, and the number of balls using the sliders at the top right of the screen. Note that changing the number of balls requires clicking on restart for the change to take effect.
