@@ -9,7 +9,7 @@ an artificial factor to simulate inelastic collisions. Otherwise, during a compl
 <br>
 <br>
 <p align="center">
-  <a href="https://youtu.be/lw9to5DSBRA">
+  <a href="https://youtu.be/lw9to5DSBRA" target="_blank">
     <img src="https://img.youtube.com/vi/lw9to5DSBRA/0.jpg" alt="Video Preview" />
   </a>
 </p>
