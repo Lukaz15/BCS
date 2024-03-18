@@ -17,3 +17,6 @@ an artificial factor to simulate inelastic collisions. Otherwise, during a compl
 <br>
 Click on "Start" to start the simulation.
 You can adjust the restitution value (to simulate inelastic collisions), gravity, and the number of balls using the sliders at the top right of the screen. Note that changing the number of balls requires clicking on restart for the change to take effect.
+<br>
+<br>
+<a href="https://lukaz15.github.io/BCS/">You can try it out here</a>
