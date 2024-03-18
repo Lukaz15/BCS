@@ -1,7 +1,5 @@
 //Initial declarations
 const canvas = document.getElementById('simulation');
-canvas.height = window.innerHeight / 1.3;
-canvas.width = window.innerWidth / 1.3;
 const res_text = document.getElementById('restitution-value');
 const ctx = canvas.getContext("2d");
 const res_slider = document.getElementById('restitution-slider');
@@ -10,15 +8,21 @@ const ball_text = document.getElementById('balls-value');
 const grav_slider = document.getElementById('gravity-slider');
 const grav_text = document.getElementById('gravity-value');
 const start = document.getElementById('start');
-//Declares the scale of the simulation
-const simScale = Math.max(canvas.width, canvas.height) / 100;
-const sim = { width: canvas.width / simScale, height: canvas.height / simScale };
-//Declares some important global parameters 
+let simScale
+let sim
 let gravity = 0;
 const dt = 1.0 / 30.0;
 let balls = 10;
 let restitution = 1;
 let objects = [];
+
+function simSize(){
+    //Declares the scale of the simulation
+    canvas.height = window.innerHeight / 1.3;
+    canvas.width = window.innerWidth / 1.3;
+    simScale = Math.max(canvas.width, canvas.height) / 100;
+    sim = { width: canvas.width / simScale, height: canvas.height / simScale };
+}
 
 //Functions to adjust the values of the sliders
 ball_slider.oninput = function () {
@@ -95,6 +99,7 @@ function setupSim() {
         objects.push(new object(radius, pos, startVelocity, velocity, mass, accel));
     }
 }
+start.addEventListener('click', setupSim);
 
 //Detects and computes the collisions between objects
 function collisionObjects(object, i) {
@@ -252,5 +257,6 @@ function animate() {
     drawObjects();
     requestAnimationFrame(animate);
 }
-start.addEventListener('click', setupSim);
+simSize();
 animate();
+window.addEventListener('resize', simSize);
