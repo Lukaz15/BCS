@@ -5,7 +5,6 @@
 html {
     background-color: #030f38;
     color: #adabc4;
-    font-size: 62.5%
 }
 
 
@@ -17,6 +16,7 @@ html {
 
 #start {
     grid-area: 2 / 4 / 4 / 6;
+    font-size: 2.5vw;
     height: 150%;
     width: 100%;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -54,7 +54,7 @@ html {
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     overflow-y: hidden;
-    font-size: 1.5rem;
+    font-size: 1.5vw;
 }
 
 ::-webkit-slider-runnable-track {
