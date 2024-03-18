@@ -5,6 +5,7 @@
 html {
     background-color: #030f38;
     color: #adabc4;
+    font-size: 62.5%
 }
 
 
@@ -53,6 +54,7 @@ html {
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     overflow-y: hidden;
+    font-size: 1.5rem;
 }
 
 ::-webkit-slider-runnable-track {
@@ -71,7 +73,6 @@ html {
 }
 
 .slider-text {
-    font-size: 90%;
     justify-self: right;
     padding-right: 5%;
     padding-left: 5%;
@@ -85,7 +86,6 @@ html {
 }
 
 .value {
-    font-size: 1rem;
     overflow-y: hidden;
     justify-self: left;
     width: 100%;
