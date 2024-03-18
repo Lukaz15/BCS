@@ -14,7 +14,7 @@ const start = document.getElementById('start');
 const simScale = Math.max(canvas.width, canvas.height) / 100;
 const sim = { width: canvas.width / simScale, height: canvas.height / simScale };
 //Declares some important global parameters 
-let gravity = -9.81;
+let gravity = 0;
 const dt = 1.0 / 30.0;
 let balls = 10;
 let restitution = 1;
@@ -22,18 +22,20 @@ let objects = [];
 
 //Functions to adjust the values of the sliders
 ball_slider.oninput = function () {
-    balls = this.value;
+    balls = parseInt(this.value, 10);
     ball_text.textContent = this.value;
 };
 
 res_slider.oninput = function () {
-    restitution = this.value / 10;
+    restitution = parseFloat(this.value) / 10;
     res_text.textContent = this.value / 10;
 };
 
 grav_slider.oninput = function () {
-    gravity = this.value * -1;
+    if (Math.abs(parseFloat(this.value) - 9.81) < 1){this.value = 9.81}
+    gravity = parseFloat(this.value * -1);
     grav_text.textContent = this.value * -1;
+    
 };
 
 // Functions to scale position values back to canvas coordinates
@@ -148,28 +150,28 @@ function collisionWalls(object) {
     if (object.pos.X < object.radius) {
         object.pos.X = object.radius;
         object.velocity.X = -object.velocity.X * restitution;
-        playOnWall(object.velocity.magnitude(), object.velocity.Y);
+        playOnWall(object.velocity.magnitude());
 
     }
 
     if (object.pos.X > sim.width - object.radius) {
         object.pos.X = sim.width - object.radius;
         object.velocity.X = -object.velocity.X * restitution;
-        playOnWall(object.velocity.magnitude(), object.velocity.Y);
+        playOnWall(object.velocity.magnitude());
 
     }
 
     if (object.pos.Y < object.radius) {
         object.pos.Y = object.radius;
         object.velocity.Y = -object.velocity.Y * restitution;
-        playOnWall(object.velocity.magnitude(), object.velocity.Y);
+        if (object.velocity.Y > 20){playOnWall(object.velocity.magnitude());}
 
     }
 
     if (object.pos.Y > sim.height - object.radius) {
         object.pos.Y = sim.height - object.radius;
         object.velocity.Y = -object.velocity.Y * restitution;
-        playOnWall(object.velocity.magnitude(), object.velocity.Y);
+        playOnWall(object.velocity.magnitude());
 
 
     }
@@ -196,20 +198,18 @@ function Animation() {
 }
 //Function to play a sound when balls collide with each other
 function playOnBall(speed) {
-    if (speed > 50) {
+    if (speed > 30) {
         const audio = new Audio('ball_collide.wav');
         speed = Math.abs(speed);
-        audio.volume = Math.min(speed / 900, 1);
+        audio.volume = Math.min(speed / 900, 0.8);
         audio.play();
     }
 }
 //Function to play a sound when balls collide with a wall
-function playOnWall(speed, sY) {
-    if (sY > 5) {
-        const audio = new Audio('wall_collide.wav');
-        audio.volume = Math.min(speed / 35, 1);
-        audio.play();
-    }
+function playOnWall(speed) {
+    const audio = new Audio('wall_collide.wav');
+    audio.volume = Math.min(speed / 35, 0.6);
+    audio.play();
 }
 //Function to draw a cosmetic circle around balls that collide
 function glowOn(object, object2, speed) {
