@@ -11,12 +11,12 @@ const start = document.getElementById('start');
 let simScale
 let sim
 let gravity = 0;
-const dt = 1.0 / 30.0;
+let elapsed = 0.0;
 let balls = 10;
 let restitution = 1;
 let objects = [];
 
-function simSize(){
+function simSize() {
     //Declares the scale of the simulation
     canvas.height = window.innerHeight / 1.3;
     canvas.width = window.innerWidth / 1.3;
@@ -36,10 +36,10 @@ res_slider.oninput = function () {
 };
 
 grav_slider.oninput = function () {
-    if (Math.abs(parseFloat(this.value) - 9.81) < 1){this.value = 9.81}
+    if (Math.abs(parseFloat(this.value) - 9.81) < 1) { this.value = 9.81 }
     gravity = parseFloat(this.value * -1);
     grav_text.textContent = this.value * -1;
-    
+
 };
 
 // Functions to scale position values back to canvas coordinates
@@ -169,7 +169,7 @@ function collisionWalls(object) {
     if (object.pos.Y < object.radius) {
         object.pos.Y = object.radius;
         object.velocity.Y = -object.velocity.Y * restitution;
-        if (object.velocity.Y > 20){playOnWall(object.velocity.magnitude());}
+        if (object.velocity.Y > 20) { playOnWall(object.velocity.magnitude()); }
 
     }
 
@@ -184,7 +184,11 @@ function collisionWalls(object) {
 }
 
 //Animates the objects across the simulation space and calls for the detections and handling of collisions
-function Animation() {
+function Animation(timestamp) {
+    const dt = (timestamp - elapsed) / 1000;
+    elapsed = timestamp;
+
+
     objects.forEach(function callback(object, i) {
         if (object.velocity.X < object.startVelocity.X) {
             object.velocity.X += object.accel.X * dt;
@@ -251,9 +255,9 @@ function drawObjects() {
 }
 
 // Function to start the main animation loop
-function animate() {
+function animate(timestamp) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    Animation();
+    Animation(timestamp);
     drawObjects();
     requestAnimationFrame(animate);
 }
